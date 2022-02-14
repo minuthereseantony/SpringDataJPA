@@ -17,6 +17,7 @@ public class Employee {
     private String email;
     @ManyToOne
     @JoinColumn(name="department_id")
+    //added relationship
     private Department department;
 
     public Employee() {
