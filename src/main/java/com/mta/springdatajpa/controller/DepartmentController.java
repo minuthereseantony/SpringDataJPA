@@ -2,6 +2,7 @@ package com.mta.springdatajpa.controller;
 
 import com.mta.springdatajpa.exception.ResourceNotFoundException;
 import com.mta.springdatajpa.model.Department;
+import com.mta.springdatajpa.model.Employee;
 import com.mta.springdatajpa.repository.DepartmentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -29,8 +30,17 @@ public class DepartmentController {
 
     }
 
-  //  @PostMapping("departments")
+    @PostMapping("departments")
 
-    //public
+    public Department createDepartment(@RequestBody Department department){
+        return this.departmentRepository.save(department);
+    }
+    @GetMapping("departments/{id}/employees")
+    public List<Employee> getAllEmployeesByDepartment(@PathVariable(value="id") Long departmentId) throws ResourceNotFoundException {
 
+        Department dep = this.departmentRepository.findById(departmentId).orElseThrow(() ->new ResourceNotFoundException("Department not found"));
+        return dep.getEmployees();
+
+
+    }
 }

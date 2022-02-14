@@ -1,6 +1,5 @@
 package com.mta.springdatajpa.model;
 
-import net.bytebuddy.dynamic.loading.InjectionClassLoader;
 
 import javax.persistence.*;
 
@@ -16,19 +15,27 @@ public class Employee {
     private String lastName;
     @Column(name="email")
     private String email;
-    @OneToOne
-    @JoinColumn(name ="department" )
-    private Department departmentId;
+    @ManyToOne
+    @JoinColumn(name="department_id")
+    private Department department;
 
     public Employee() {
     }
 
-    public Employee(Long id, String firstName, String lastName, String email, Department departmentId) {
+    public Employee(Long id, String firstName, String lastName, String email, Department department) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
-        this.departmentId = departmentId;
+        this.department = department;
+    }
+
+    public Department getDepartment() {
+        return department;
+    }
+
+    public void setDepartment(Department department) {
+        this.department = department;
     }
 
     public String getFirstName() {
@@ -63,11 +70,4 @@ public class Employee {
         this.id = id;
     }
 
-    public Department getDepartmentId() {
-        return departmentId;
-    }
-
-    public void setDepartmentId(Department departmentId) {
-        this.departmentId = departmentId;
-    }
 }

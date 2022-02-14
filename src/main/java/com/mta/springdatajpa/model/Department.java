@@ -1,6 +1,10 @@
 package com.mta.springdatajpa.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name="department")
@@ -10,17 +14,30 @@ public class Department {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long departmentId;
     @Column(name="department_name")
-    private String departmentNAme;
+    private String departmentName;
     @Column(name="department_head")
     private String departmentHead;
+
+    @OneToMany(mappedBy = "department")
+    @JsonIgnore
+    private List<Employee> employees;
 
     public Department() {
     }
 
-    public Department(Long departmentId, String departmentNAme, String departmentHead) {
+    public Department(Long departmentId, String departmentName, String departmentHead, List<Employee> employees) {
         this.departmentId = departmentId;
-        this.departmentNAme = departmentNAme;
+        this.departmentName = departmentName;
         this.departmentHead = departmentHead;
+        this.employees = employees;
+    }
+
+    public List<Employee> getEmployees() {
+        return employees;
+    }
+
+    public void setEmployees(List<Employee> employees) {
+        this.employees = employees;
     }
 
     public Long getDepartmentId() {
@@ -31,12 +48,12 @@ public class Department {
         this.departmentId = departmentId;
     }
 
-    public String getDepartmentNAme() {
-        return departmentNAme;
+    public String getDepartmentName() {
+        return departmentName;
     }
 
-    public void setDepartmentNAme(String departmentNAme) {
-        this.departmentNAme = departmentNAme;
+    public void setDepartmentNAme(String departmentName) {
+        this.departmentName = departmentName;
     }
 
     public String getDepartmentHead() {
